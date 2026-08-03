@@ -12,6 +12,7 @@ Radboud
 Nijmegen
 SaC
 Slurm
+Snellius
 RAPL
 PSys
 Core
@@ -23,3 +24,10 @@ VQhull
 Quickhull
 ConcurrentHull
 QuickSort
+DPD
+DPDs
+EnPD
+EnPDs
+mindmap
+Mindmap
+mAIndmap
