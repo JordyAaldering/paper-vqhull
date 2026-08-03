@@ -1,0 +1,25 @@
+Jordy
+Aaldering
+Bernard
+{van Gastel}
+{Sven-Bodo}
+Scholz
+Thomas
+Koopman
+Victor
+Zudilin
+Radboud
+Nijmegen
+SaC
+Slurm
+RAPL
+PSys
+Core
+core
+Uncore
+uncore
+Qhull
+VQhull
+Quickhull
+ConcurrentHull
+QuickSort
