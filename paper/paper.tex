@@ -303,7 +303,7 @@ This incurs significant data movement in the cleanup step, which we would like t
         \draw[->, thick] (10.8, 1.5) node[above] {$w_r$} -- (10.8, 1.1);
       \end{tikzpicture}
     }
-    \subcaption{Local extraction for four processors, in different colors.}
+    \subcaption{Local extraction for four processors, in different colours.}
   \end{subfigure}
   \caption{Local extraction of each subarray $P^{(s)}$.
   The set $S_1$ is represented by horizontal lines, and $S_2$ by vertical lines.
@@ -359,7 +359,7 @@ But we can choose $b \in O(1)$ quite small without suffering hardware penalties.
         \draw[->, thick] (10.8, 1.5) node[above] {$w_r$} -- (10.8, 1.1);
       \end{tikzpicture}
     }
-    \subcaption{Local partition for four processors, in different colors.}
+    \subcaption{Local partition for four processors, in different colours.}
   \end{subfigure}
   \caption{Local extraction of each subarray $P^{(s)}$, block\-/cyclic distribution.
   The set $S_1$ is represented by horizontal lines, and $S_2$ by vertical lines.
@@ -405,7 +405,7 @@ Putting this together yields Algorithm~\ref{alg:par_subset}.
 
 \section{Implementation}\label{sec:impl}
 We implement the algorithm using the Highway library~\cite{wassenberg2022vectorized} for vectorization, and OpenMP for multithreading.
-Our library is available with Fortran and C interfaces under a GPLv3 license~\cite{vqhull2025repository}.
+Our library is available with Fortran and C interfaces under a GPLv3 licence~\cite{vqhull2025repository}.
 The basic idea is faithful to Algorithm~\ref{alg:quickhull} and the subset extraction, but several small changes are necessary to obtain good performance, which we document here.
 
 \paragraph{Parallelization}
@@ -439,12 +439,14 @@ Comparing against a weak baseline is not informative, so we first identify the s
 The original authors of Quickhull, the Computational Geometry Algorithms Library (CGAL)~\cite{cgal2024manual}, and the
 Problem Based Benchmark Suite (PBBS)~\cite{anderson2022problem} provide implementations of Quickhull (Qhull, CGAL, PBBS).
 CGAL also provides implementations of several other convex hull algorithms.
-Preliminary measurements on a laptop (Table~\ref{tab:reference}) show that PBBS Quickhull is about \qty{2}{\times} faster than the next\-/best competitor, so we use PBBS as our primary baseline.
+Preliminary measurements on a laptop (Table~\ref{tab:reference}) show that PBBS Quickhull is about \qty{2}{\times} faster than the next-best competitor, so we use PBBS as our primary baseline.
 
 \begin{table}[ht]
   \centering
-  \begin{tabular}{cc}\toprule
-    Implementation       & Runtime (\si{\second}) \\\midrule
+  \begin{tabular}{cc}
+    \toprule
+    Implementation       & Runtime (\si{\second}) \\
+    \midrule
     PBBS                 & 0.31 \\
     CGAL Akl\-/Toussaint & 0.60 \\
     CGAL Quickhull       & 0.61 \\
@@ -453,14 +455,15 @@ Preliminary measurements on a laptop (Table~\ref{tab:reference}) show that PBBS 
     Qhull                & 1.1 \\
     CGAL Graham          & 1.3 \\
     CGAL Jarvis          & 208 \\
-  \bottomrule\end{tabular}
+    \bottomrule
+  \end{tabular}
   \caption{Runtime for a disk of $10^7$ points, sequential implementation.}%
   \label{tab:reference}
 \end{table}
 
 PBBS and VQhull differ in several design choices that are relevant when interpreting results.
 PBBS partitions an array of indices instead of the points themselves.
-Their parallelization strategy is to spawn threads on the recursive calls until a base case of $400$ points is reached.
+Their parallelization strategy is to spawn threads on the recursive calls until a base case of \qty{400} points is reached.
 The points $r_1$, $r_2$ are found in a separate pass.
 
 PBBS applies Hoare's algorithm~\cite{hoare1962quick} for partitioning sequentially, and is scan\-/based~\cite{blelloch1989scans} in parallel.
@@ -492,8 +495,10 @@ To most accurately mirror the access pattern of VQhull, we report the \emph{Scal
 
 \begin{table}[t]
   \centering
-  \begin{tabular}{cccc}\toprule
-    & cn125 & cn132 & laptop \\\midrule
+  \begin{tabular}{cccc}
+    \toprule
+    & cn125 & cn132 & laptop \\
+    \midrule
     CPU & Xeon E-2378 & Epyc 7313 ($\times$2) & i7-12700H \\
     Release year & 2021 & 2021 & 2022 \\
     Physical cores & 8 & 16 ($\times$2) & 6 \\
@@ -503,7 +508,8 @@ To most accurately mirror the access pattern of VQhull, we report the \emph{Scal
     Base--Boost frequency (\si{\giga\hertz}) & 2.6--4.8 & 3.0--3.7 & 2.3--4.7 \\
     Theoretic bandwidth (\si{\giga\byte\per\second}) & 51.2 & 204.8 & 76.8 \\
     STREAM (\si{\giga\byte\per\second}) & 41 & 140 & 52 \\
-  \bottomrule\end{tabular}
+    \bottomrule
+  \end{tabular}
   \caption{Theoretical and practical capabilities of test systems.}%
   \label{tab:system}
 \end{table}
@@ -560,7 +566,7 @@ We only have one recursive call, and the recursion is very unbalanced.
 
 The second dataset consists of points sampled uniformly from a circle, so points of the form $(\cos(\theta), \sin(\theta))$.
 A true circle is convex, so all of its points lie on the convex hull.
-However, the algorithm finds only $10985400$ of the $10^8$ points (\qty{\sim11}{\percent}).
+However, the algorithm finds only \qty{10985400} of the $10^8$ points (\qty{\sim11}{\percent}).
 This is not a mistake or a problem, because a sampled circle locally resembles a line, up to the square root of the unit round-off, and points on a line can be rejected from the convex hull.
 To be more precise, at $(\cos(\theta), \sin(\theta))$, the tangent line has equation
 \[
@@ -580,7 +586,7 @@ The recursion is also balanced, but because we discard more points, the deeper r
 Presenting performance results of an algorithm and its implementation in a meaningful way requires more than the runtime.
 The runtime alone tells us little about the quality of the implementation, as we cannot relate it to the capabilities of the machine.
 For this reason, we present our results using two statistics.
-
+`'
 First\---to evaluate how close the wallclock time gets to the hardware's peak\---we compute the bandwidth, or the amount of data moved divided by time.
 We split the $x$- and $y$-coordinates into two separate arrays.
 Assuming 64-bit floating\-/point numbers are used, this is $8|P|$ bytes for finding the left\-/most and right\-/most points.
@@ -713,7 +719,7 @@ Consequently, PBBS performs relatively better on Kuzmin, where memory access pat
   \end{subfigure}%
   \caption{Bandwidth utilization over input sweep as a percentage of STREAM's bandwidth, fixed at the maximum number of available threads.
   The solid lines represent the VQhull implementation, the dashed lines represent the PBBS implementation.
-  Each dataset is shown with a unique color and marker.}%
+  Each dataset is shown with a unique colour and marker.}%
   \label{fig:points}
 \end{figure}
 
