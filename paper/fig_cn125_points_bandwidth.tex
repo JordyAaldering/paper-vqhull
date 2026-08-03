@@ -1,0 +1,135 @@
+\begin{tikzpicture}
+\begin{axis}[
+  title={cn125},
+  width=\epyfigurewidth,
+  height={\epyheightratio*\epyfigurewidth},
+  ymin=0,
+  xlabel={Input size (points)},
+  ylabel={Bandwidth utilization (\si{{\percent}})},
+  xmode=log,
+  scaled ticks=false,
+  xtick={100000,1000000,10000000,100000000,1000000000},
+  extra y ticks={\pgfkeysvalueof{/pgfplots/ymax}},
+  extra y tick labels={\vphantom{Ag}},
+  tick pos=left,
+  tick align=outside,
+  ymajorgrids,
+  legend cell align=left,
+  major tick length=0.3em,
+  /pgf/number format/fixed,
+  axis line style={color=black!20},
+  y grid style={color=black!20,line width=0.4pt},
+  tick style={color=black!20,line width=0.4pt},
+  tick label style={inner sep=0.15em},
+  ylabel style={outer sep=-0.25em},
+  extra y tick style={grid=none,major tick length=0pt,yticklabel style={opacity=0,text opacity=0}},
+  legend style={draw=black!20,draw opacity=1,fill opacity=0.9,text opacity=1,inner sep=0.2em},
+  legend image code/.code={\path[#1] (0em,0pt) -- (1.4em,0pt) plot coordinates {(0.7em,0pt)};},
+]
+\addplot[draw=none,fill=colorblind0,fill opacity=0.3,forget plot] coordinates {
+  (100000,10.59838990844274)
+  (1000000,25.010175164791637)
+  (10000000,89.95762076662604)
+  (100000000,120.3579674290643)
+  (1000000000,109.11645092804427)
+  (1000000000,108.22562906086766)
+  (100000000,116.99847889018702)
+  (10000000,83.2648318699404)
+  (1000000,19.069903604820308)
+  (100000,6.5958517872744515)
+} \closedcycle;
+\addplot[color=colorblind0,line width=1pt,mark=*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (100000,8.597120847858596)
+  (1000000,22.040039384805972)
+  (10000000,86.61122631828322)
+  (100000000,118.67822315962566)
+  (1000000000,108.67103999445597)
+};
+\addplot[draw=none,fill=colorblind1,fill opacity=0.3,forget plot] coordinates {
+  (100000,1.244099927722852)
+  (1000000,2.8712141534996802)
+  (10000000,19.96363753822369)
+  (100000000,66.03091200197036)
+  (1000000000,75.63591453228142)
+  (1000000000,73.83158460212167)
+  (100000000,58.41502022480751)
+  (10000000,14.54769931504229)
+  (1000000,2.194960116716319)
+  (100000,0.6781624185700696)
+} \closedcycle;
+\addplot[color=colorblind1,line width=1pt,mark=square*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (100000,0.9611311731464608)
+  (1000000,2.5330871351079995)
+  (10000000,17.25566842663299)
+  (100000000,62.222966113388935)
+  (1000000000,74.73374956720154)
+};
+\addplot[draw=none,fill=colorblind2,fill opacity=0.3,forget plot] coordinates {
+  (100000,25.244977242300607)
+  (1000000,56.811373815906144)
+  (10000000,72.63699032045801)
+  (100000000,88.61606622988985)
+  (1000000000,87.58760947633269)
+  (1000000000,84.54760204353414)
+  (100000000,86.00195414399549)
+  (10000000,71.52050682901736)
+  (1000000,48.899521427069764)
+  (100000,23.836124842048626)
+} \closedcycle;
+\addplot[color=colorblind2,line width=1pt,mark=pentagon*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (100000,24.540551042174616)
+  (1000000,52.855447621487954)
+  (10000000,72.07874857473769)
+  (100000000,87.30901018694267)
+  (1000000000,86.06760575993341)
+};
+\addplot[draw=none,fill=colorblind0,fill opacity=0.3,forget plot] coordinates {
+  (100000,23.615434628003666)
+  (1000000,24.54923576464996)
+  (10000000,22.6768993078029)
+  (100000000,20.443175950664696)
+  (100000000,20.123851759614567)
+  (10000000,21.610632216281395)
+  (1000000,23.924392889424038)
+  (100000,21.882115003443932)
+} \closedcycle;
+\addplot[color=colorblind0,line width=1pt,dashed,mark=*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (100000,22.7487748157238)
+  (1000000,24.236814327037)
+  (10000000,22.143765762042147)
+  (100000000,20.28351385513963)
+};
+\addplot[draw=none,fill=colorblind1,fill opacity=0.3,forget plot] coordinates {
+  (100000,38.05388026110748)
+  (1000000,40.515605050606794)
+  (10000000,33.71331495631996)
+  (100000000,33.10200552338219)
+  (100000000,32.003770952175046)
+  (10000000,32.06940119329957)
+  (1000000,39.50829823068375)
+  (100000,20.158707817333983)
+} \closedcycle;
+\addplot[color=colorblind1,line width=1pt,dashed,mark=square*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (100000,29.10629403922073)
+  (1000000,40.01195164064527)
+  (10000000,32.891358074809766)
+  (100000000,32.55288823777862)
+};
+\addplot[draw=none,fill=colorblind2,fill opacity=0.3,forget plot] coordinates {
+  (100000,62.82416339617753)
+  (1000000,71.9695938365408)
+  (10000000,58.91256491072156)
+  (100000000,58.353641083575866)
+  (100000000,58.180431132609186)
+  (10000000,57.10881785296495)
+  (1000000,62.17532868693629)
+  (100000,57.78625728904208)
+} \closedcycle;
+\addplot[color=colorblind2,line width=1pt,dashed,mark=pentagon*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (100000,60.305210342609804)
+  (1000000,67.07246126173854)
+  (10000000,58.01069138184325)
+  (100000000,58.267036108092526)
+};
+\end{axis}
+\end{tikzpicture}

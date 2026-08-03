@@ -1,0 +1,10 @@
+1e5
+Kuzmin: 8.8 MB, Circle: 74 MB, Disk: 7.2 MB
+1e6
+Kuzmin: 56  MB, Circle: 880 MB, Disk: 72 MB
+1e7
+Kuzmin: 0.56 GB, Circle: 8.6 GB, Disk: 0.72 GB
+1e8
+Kuzmin: 5.6 GB, Circle: 73 GB, Disk: 7.2 GB
+1e9
+Kuzmin: 24  GB, Circle: 690 GB, Disk: 72 GB

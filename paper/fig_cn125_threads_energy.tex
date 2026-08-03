@@ -1,0 +1,146 @@
+\begin{tikzpicture}
+\begin{axis}[
+  title={cn125},
+  width=\epyfigurewidth,
+  height={\epyheightratio*\epyfigurewidth},
+  ymin=0,
+  xlabel={Threads},
+  ylabel={Energy efficiency (\si{\giga\byte\per\joule})},
+  xmode=log,
+  scaled ticks=false,
+  xtick={1,2,4,8,16},
+  extra y ticks={\pgfkeysvalueof{/pgfplots/ymax}},
+  xticklabels={1,2,4,8,16},
+  extra y tick labels={\vphantom{Ag}},
+  tick pos=left,
+  tick align=outside,
+  ymajorgrids,
+  legend cell align=left,
+  major tick length=0.3em,
+  /pgf/number format/fixed,
+  axis line style={color=black!20},
+  y grid style={color=black!20,line width=0.4pt},
+  tick style={color=black!20,line width=0.4pt},
+  tick label style={inner sep=0.15em},
+  ylabel style={outer sep=-0.25em},
+  extra y tick style={grid=none,major tick length=0pt,yticklabel style={opacity=0,text opacity=0}},
+  legend style={draw=black!20,draw opacity=1,fill opacity=0.9,text opacity=1,inner sep=0.2em},
+  legend image code/.code={\path[#1] (0em,0pt) -- (1.4em,0pt) plot coordinates {(0.7em,0pt)};},
+]
+\addplot[draw=none,fill=colorblind0,fill opacity=0.3,forget plot] coordinates {
+  (1,1.276329018558754)
+  (2,1.7061680994574355)
+  (4,1.7975224253337512)
+  (8,1.7710066726891671)
+  (16,1.5506948631146407)
+  (16,1.5361635159664162)
+  (8,1.7592530134368172)
+  (4,1.786577158685364)
+  (2,1.6868413649453255)
+  (1,1.2563937554108533)
+} \closedcycle;
+\addplot[color=colorblind0,line width=1pt,mark=*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,1.2681008425626707)
+  (2,1.7016412341749874)
+  (4,1.79327485085601)
+  (8,1.7676881609151711)
+  (16,1.5449700166006946)
+};
+\addplot[draw=none,fill=colorblind1,fill opacity=0.3,forget plot] coordinates {
+  (1,1.029491541646957)
+  (2,1.302876546801578)
+  (4,1.1684814568107387)
+  (8,0.8723319885914709)
+  (16,0.6647497669412863)
+  (16,0.6390488706042714)
+  (8,0.858195588856299)
+  (4,1.1401191590918773)
+  (2,1.2683985481082627)
+  (1,1.0200781695568322)
+} \closedcycle;
+\addplot[color=colorblind1,line width=1pt,mark=square*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,1.0258425214619042)
+  (2,1.282355169912956)
+  (4,1.16404283974348)
+  (8,0.8686314175636622)
+  (16,0.6496852318233329)
+};
+\addplot[draw=none,fill=colorblind2,fill opacity=0.3,forget plot] coordinates {
+  (1,1.1639332416143655)
+  (2,1.4060036570663286)
+  (4,1.3453800228383395)
+  (8,0.933804619032839)
+  (16,0.8024673541848344)
+  (16,0.790321440413323)
+  (8,0.928163584334095)
+  (4,1.3224586565597338)
+  (2,1.3615927415487719)
+  (1,1.1530764036440095)
+} \closedcycle;
+\addplot[color=colorblind2,line width=1pt,mark=pentagon*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,1.1592327806996183)
+  (2,1.4012054012524304)
+  (4,1.337017076201755)
+  (8,0.9294649212500365)
+  (16,0.7939174042591903)
+};
+\addplot[draw=none,fill=colorblind0,fill opacity=0.3,forget plot] coordinates {
+  (1,0.08923755554908293)
+  (2,0.13138149754328332)
+  (4,0.17505366496471275)
+  (8,0.1927026135840852)
+  (16,0.2200634032411107)
+  (16,0.21724481162844797)
+  (8,0.18945365456938726)
+  (4,0.17384462554250396)
+  (2,0.12991482780518568)
+  (1,0.08772676830827511)
+} \closedcycle;
+\addplot[color=colorblind0,line width=1pt,dashed,mark=*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,0.08896579671787283)
+  (2,0.13109437687449188)
+  (4,0.17441296557698674)
+  (8,0.19157226328396026)
+  (16,0.21880118545775745)
+};
+\addplot[draw=none,fill=colorblind1,fill opacity=0.3,forget plot] coordinates {
+  (1,0.13801683584089305)
+  (2,0.21497782141674943)
+  (4,0.2868433459055822)
+  (8,0.3173214350701123)
+  (16,0.3544855424177959)
+  (16,0.3502319322911483)
+  (8,0.31338376258853773)
+  (4,0.2736815132659659)
+  (2,0.21096606923797473)
+  (1,0.13552126215396187)
+} \closedcycle;
+\addplot[color=colorblind1,line width=1pt,dashed,mark=square*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,0.13714615126743213)
+  (2,0.21371976129649864)
+  (4,0.2844409693098223)
+  (8,0.314316541253162)
+  (16,0.3525588123344852)
+};
+\addplot[draw=none,fill=colorblind2,fill opacity=0.3,forget plot] coordinates {
+  (1,0.41957488321453196)
+  (2,0.4553740710610309)
+  (4,0.6096557800442406)
+  (8,0.6573442200223013)
+  (16,0.5945267445271327)
+  (16,0.5930528347612725)
+  (8,0.6549485272625835)
+  (4,0.6076646010989555)
+  (2,0.4534286643066389)
+  (1,0.41763522641841494)
+} \closedcycle;
+\addplot[color=colorblind2,line width=1pt,dashed,mark=pentagon*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,0.4188209605265828)
+  (2,0.45476689380305635)
+  (4,0.6089259877696434)
+  (8,0.6560617535285747)
+  (16,0.593543928071147)
+};
+\draw[draw=gray,dashed] (axis cs:8,0) -- (axis cs:8,5);
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,167 @@
+\begin{tikzpicture}
+\begin{axis}[
+  title={cn132},
+  width=\epyfigurewidth,
+  height={\epyheightratio*\epyfigurewidth},
+  ymin=0,
+  xlabel={Threads},
+  ylabel={Bandwidth utilization (\si{{\percent}})},
+  xmode=log,
+  scaled ticks=false,
+  xtick={1,2,4,8,16,32},
+  extra y ticks={\pgfkeysvalueof{/pgfplots/ymax}},
+  xticklabels={1,2,4,8,16,32},
+  extra y tick labels={\vphantom{Ag}},
+  tick pos=left,
+  tick align=outside,
+  ymajorgrids,
+  legend pos=north west,
+  legend cell align=left,
+  major tick length=0.3em,
+  /pgf/number format/fixed,
+  axis line style={color=black!20},
+  y grid style={color=black!20,line width=0.4pt},
+  tick style={color=black!20,line width=0.4pt},
+  tick label style={inner sep=0.15em},
+  ylabel style={outer sep=-0.25em},
+  extra y tick style={grid=none,major tick length=0pt,yticklabel style={opacity=0,text opacity=0}},
+  legend style={draw=black!20,draw opacity=1,fill opacity=0.9,text opacity=1,inner sep=0.2em},
+  legend image code/.code={\path[#1] (0em,0pt) -- (1.4em,0pt) plot coordinates {(0.7em,0pt)};},
+]
+\addplot[draw=none,fill=colorblind0,fill opacity=0.3,forget plot] coordinates {
+  (1,7.627070022392399)
+  (2,16.248588189069583)
+  (4,32.57892698711747)
+  (8,63.85099750888911)
+  (16,114.57844208396449)
+  (32,164.53946326257736)
+  (32,150.73359245293742)
+  (16,112.16782761188335)
+  (8,62.840388281870815)
+  (4,32.02920677288223)
+  (2,15.994478266603007)
+  (1,6.823004481741183)
+} \closedcycle;
+\addplot[color=colorblind0,line width=1pt,mark=*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,7.225037252066791)
+  (2,16.121533227836295)
+  (4,32.30406687999985)
+  (8,63.34569289537996)
+  (16,113.37313484792392)
+  (32,157.6365278577574)
+};
+\addlegendentry{Circle}
+\addplot[draw=none,fill=colorblind1,fill opacity=0.3,forget plot] coordinates {
+  (1,6.741636665289068)
+  (2,13.990463402392864)
+  (4,28.401915369647803)
+  (8,52.8271976293457)
+  (16,77.8473669102587)
+  (32,78.46293691454876)
+  (32,72.16885093317974)
+  (16,73.3165976893676)
+  (8,49.574683300250406)
+  (4,26.152217073619084)
+  (2,12.932835772433412)
+  (1,6.021895119311969)
+} \closedcycle;
+\addplot[color=colorblind1,line width=1pt,mark=square*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,6.3817658923005185)
+  (2,13.461649587413138)
+  (4,27.277066221633444)
+  (8,51.20094046479805)
+  (16,75.58198229981315)
+  (32,75.31589392386425)
+};
+\addlegendentry{Disk}
+\addplot[draw=none,fill=colorblind2,fill opacity=0.3,forget plot] coordinates {
+  (1,7.351268020715182)
+  (2,19.24777971734405)
+  (4,35.42000839509254)
+  (8,62.16148961648025)
+  (16,83.5883312093342)
+  (32,85.26675856440193)
+  (32,82.85128431200846)
+  (16,81.38733139833676)
+  (8,57.97932269807235)
+  (4,33.83184265177293)
+  (2,17.188359438852924)
+  (1,6.574498258403636)
+} \closedcycle;
+\addplot[color=colorblind2,line width=1pt,mark=pentagon*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,6.962883139559409)
+  (2,18.218069578098486)
+  (4,34.625925523432734)
+  (8,60.0704061572763)
+  (16,82.48783130383548)
+  (32,84.05902143820519)
+};
+\addlegendentry{Kuzmin}
+\addplot[draw=none,fill=colorblind0,fill opacity=0.3,forget plot] coordinates {
+  (1,1.367866235241262)
+  (2,2.0384524413064926)
+  (4,4.199144783995001)
+  (8,7.216995583885496)
+  (16,11.127650124501148)
+  (32,15.827366537645291)
+  (32,15.65354219190185)
+  (16,9.844305267885986)
+  (8,6.276888104566734)
+  (4,4.13910105665177)
+  (2,1.9993939948562638)
+  (1,1.3062678366243141)
+} \closedcycle;
+\addplot[color=colorblind0,line width=1pt,dashed,mark=*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,1.337067035932788)
+  (2,2.0189232180813783)
+  (4,4.169122920323385)
+  (8,6.746941844226115)
+  (16,10.485977696193567)
+  (32,15.740454364773571)
+};
+\addplot[draw=none,fill=colorblind1,fill opacity=0.3,forget plot] coordinates {
+  (1,1.7515810623020178)
+  (2,2.8390485883183043)
+  (4,5.747218371302671)
+  (8,10.90561805761388)
+  (16,19.162833317795734)
+  (32,27.384634141523986)
+  (32,26.372881679734636)
+  (16,18.57134687496087)
+  (8,10.66742336176027)
+  (4,5.593788026825668)
+  (2,2.8289578855324535)
+  (1,1.719527524427258)
+} \closedcycle;
+\addplot[color=colorblind1,line width=1pt,dashed,mark=square*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,1.735554293364638)
+  (2,2.834003236925379)
+  (4,5.67050319906417)
+  (8,10.786520709687075)
+  (16,18.867090096378302)
+  (32,26.87875791062931)
+};
+\addplot[draw=none,fill=colorblind2,fill opacity=0.3,forget plot] coordinates {
+  (1,7.319400323330377)
+  (2,4.1807491894779885)
+  (4,8.308484086563197)
+  (8,16.392096729901645)
+  (16,31.838255320015616)
+  (32,55.709314533341406)
+  (32,55.05501523426752)
+  (16,31.14947515165613)
+  (8,16.13521691836891)
+  (4,8.195215093597412)
+  (2,4.172982365088186)
+  (1,6.793849815767463)
+} \closedcycle;
+\addplot[color=colorblind2,line width=1pt,dashed,mark=pentagon*,mark size=2pt,mark options={draw=white,line width=-0.4pt,solid}] coordinates {
+  (1,7.05662506954892)
+  (2,4.176865777283087)
+  (4,8.251849590080305)
+  (8,16.26365682413528)
+  (16,31.493865235835873)
+  (32,55.382164883804464)
+};
+\end{axis}
+\end{tikzpicture}
