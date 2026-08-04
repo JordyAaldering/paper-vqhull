@@ -22,7 +22,7 @@ Though still theoretically interesting, these algorithms do not deliver on the g
 More recent approaches~\cite{masnadi2020concurrent} rely on point filtering for most of the performance gain.
 While valuable, this is orthogonal to convex hull algorithms on data that cannot be effectively filtered.
 Relating runtime performance to peak performance of the hardware shows there is still significant room for improvement.
-In this paper, we aim to close this gap by providing a novel parallelization of the Quickhull algorithm called VQhull.
+In this paper, we aim to close this gap by providing a novel parallelisation of the Quickhull algorithm called VQhull.
 
 Moreover, the notion of performance is evolving.
 Practical power limits already constrain real systems: data centres are increasingly bound by facility\-/level power delivery, and expansion or higher sustained load is often limited by what can be supplied to the building rather than by available compute hardware.
@@ -82,9 +82,9 @@ If $x$, $y$ are on $CH(P)$, then a point $z \in P$ with maximum distance to $\ov
       4.30/1.55,
       5.80/2.35
     } {\fill (\x,\y) circle (2pt);}
-  \end{tikzpicture}
+  \end{tikzpicture}%
   \caption{An example of the first partitioning step of the Quickhull algorithm.}%
-  \label{fig:quickhull}
+  \label{fig:quickhull}%
 \end{figure}
 
 \begin{algorithm}[ht]
@@ -106,9 +106,9 @@ If $x$, $y$ are on $CH(P)$, then a point $z \in P$ with maximum distance to $\ov
                        $\{r\}$ $\cup$ \Call{Hull}{$S_2$, $r$, $r_2$, $q$}}
       \EndIf
     \EndFunction
-  \end{algorithmic}
+  \end{algorithmic}%
   \captionof{algorithm}{Quickhull algorithm.}%
-  \label{alg:quickhull}
+  \label{alg:quickhull}%
 \end{algorithm}
 
 We can efficiently and accurately tell whether $u$ is to the left of $\overrightarrow{pq}$ by testing
@@ -136,7 +136,7 @@ This is called branch prediction and improves performance when guessed correctly
 If the guess is incorrect, the CPU must make an expensive recovery.
 This trade-off is usually worthwhile because most branches are easy to predict, but Quickhull is an exception to this rule.
 
-\paragraph{Vectorization}
+\paragraph{Vectorisation}
 A \emph{vector} or \emph{SIMD} instruction is one that operates on multiple primitive types (such as integers or floating point numbers) at the same time.
 The number of elements is called the \emph{vector width}, and is typically between $2$ and $8$ elements.
 
@@ -149,7 +149,7 @@ After all, we also need to load and store data fast enough.
 We call applications limited by the number of computations we can do \emph{compute\-/bound}, and applications limited by data movement \emph{memory\-/bound}.
 The main goal in optimizing memory\-/bound computations is to improve data locality, which shifts data movement from DRAM to caches.
 
-Branch prediction and vectorization happen on each core.
+Branch prediction and vectorisation happen on each core.
 Similarly, each core also has some fast local memory called a cache.
 These resources scale with using more cores.
 Main memory, however, shares a common data bus with all cores.
@@ -188,9 +188,9 @@ We can use this instruction twice to extract the elements of $S_1$ and $S_2$ fro
     \node at (-1, 1) {\code{mask}};
     \node at (-1, 0.25) {\code{vector}};
     \node at (-1, -0.5) {\code{memory}};
-  \end{tikzpicture}
+  \end{tikzpicture}%
   \caption{The \code{vcompresspd} instruction.}%
-  \label{fig:compress}
+  \label{fig:compress}%
 \end{figure}
 
 To extend the extraction to an entire array, we repeatedly use the compression instruction while maintaining an invariant illustrated in Figure~\ref{fig:invariant_qhull}.
@@ -221,9 +221,9 @@ Algorithm~\ref{alg:subset} maintains the following invariant, where $d$ is the n
       \State extract $S_2$ from reg, decrease $w_r$, write to $w_r$
     \EndWhile
     \State extract $S_1$, $S_2$ from bufL and bufR
-  \end{algorithmic}
+  \end{algorithmic}%
   \captionof{algorithm}{Subset extraction.}%
-  \label{alg:subset}
+  \label{alg:subset}%
 \end{algorithm}
 
 We establish the invariant with steps 1 and 2 of Algorithm~\ref{alg:subset}.
@@ -232,7 +232,7 @@ Our writes respect assertions 1 and 2.
 We read $d$ elements from the side of the array where the distance between read and write pointer is smallest, ensuring that on that side no points are overwritten.
 Assertion 3 ensures there are no points overwritten on the other side either, which implies 4.
 Therefore, we only have to show that assertion 3 holds.
-For this reason, we ensure at the initialization of the algorithm that $(r_l - w_l) + (r_r - w_l) \geq 2d$.
+For this reason, we ensure at the initialisation of the algorithm that $(r_l - w_l) + (r_r - w_l) \geq 2d$.
 As we read $d$ elements at each step, and write less than or equal to $d$ elements, this inequality is maintained.
 The sum $(r_l - w_l) + (r_r - w_l)$ is at least $2d$, so the minimum $\min(r_l - w_l, r_r - w_l)$ is at least $d$.
 
@@ -249,10 +249,10 @@ The sum $(r_l - w_l) + (r_r - w_l)$ is at least $2d$, so the minimum $\min(r_l -
       \draw[->] (8,  1.5) node[above] {$r_l$} -- (8,  1.1);
       \draw[->] (16, 1.5) node[above] {$r_r$} -- (16, 1.1);
       \draw[->] (20, 1.5) node[above] {$w_r$} -- (20, 1.1);
-    \end{tikzpicture}
-  }
+    \end{tikzpicture}%
+  }%
   \caption{Invariant for extracting the subsets $S_1$ and $S_2$ from a set of points $P$.}%
-  \label{fig:invariant_qhull}
+  \label{fig:invariant_qhull}%
 \end{figure}
 
 \subsection{Parallel extraction}
@@ -276,39 +276,36 @@ However, the block partition gives each thread indices that are either on the le
 This incurs significant data movement in the cleanup step, which we would like to avoid.
 
 \begin{figure}[ht]
-  \begin{subfigure}{\columnwidth}
-    \resizebox{\columnwidth}{!}{%
+  \begin{subfigure}[b]{\linewidth}
+    \resizebox{\linewidth}{!}{%
       \begin{tikzpicture}
         \draw (0, 0) rectangle (16, 0.5);
-
         \draw[fill=lightgray] (1 * 4, 0) rectangle (1 * 4 + 4, 0.5);
-        \draw[pattern=horizontal lines, pattern color=black] (1 * 4, 0) rectangle (1 * 4 + 1.3, 0.5);
-        \draw[pattern=vertical lines, pattern color=black] (1 * 4 + 2.7, 0) rectangle (1 * 4 + 4, 0.5);
-      \end{tikzpicture}
-    }
-    \subcaption{Local extraction of $P^{(s)}$, SPMD view from thread $s$.}
+        \draw[pattern=horizontal lines,pattern color=black] (1 * 4, 0) rectangle (1 * 4 + 1.3, 0.5);
+        \draw[pattern=vertical lines,pattern color=black] (1 * 4 + 2.7, 0) rectangle (1 * 4 + 4, 0.5);
+      \end{tikzpicture}%
+    }%
+    \caption{Local extraction of $P^{(s)}$, SPMD view from thread $s$.}%
   \end{subfigure}
-  \begin{subfigure}{\columnwidth}
-    \resizebox{\columnwidth}{!}{%
+  \begin{subfigure}[b]{\linewidth}
+    \resizebox{\linewidth}{!}{%
       \begin{tikzpicture}
         \draw (0, 0) rectangle (16, 0.5);
-
         \foreach \s/\col in {0/colorblind0, 1/colorblind1, 2/colorblind2, 3/colorblind3} {
             \draw[fill=white!60!\col] (\s * 4, 0) rectangle (\s * 4 + 4, 0.5);
-            \draw[pattern=horizontal lines, pattern color=\col] (\s * 4, 0) rectangle (\s * 4 + 1.3, 0.5);
-            \draw[pattern=vertical lines, pattern color=\col] (\s * 4 + 2.7, 0) rectangle (\s * 4 + 4, 0.5);
+            \draw[pattern=horizontal lines,pattern color=\col] (\s * 4, 0) rectangle (\s * 4 + 1.3, 0.5);
+            \draw[pattern=vertical lines,pattern color=\col] (\s * 4 + 2.7, 0) rectangle (\s * 4 + 4, 0.5);
         }
-
-        \draw[->, thick] (5.2 , 1.5) node[above] {$w_l$} -- (5.2 , 1.1);
-        \draw[->, thick] (10.8, 1.5) node[above] {$w_r$} -- (10.8, 1.1);
-      \end{tikzpicture}
-    }
-    \subcaption{Local extraction for four processors, in different colours.}
-  \end{subfigure}
+        \draw[->,thick] ( 5.2, 1.5) node[above] {$w_l$} -- (5.2 , 1.1);
+        \draw[->,thick] (10.8, 1.5) node[above] {$w_r$} -- (10.8, 1.1);
+      \end{tikzpicture}%
+    }%
+    \caption{Local extraction for four processors, in different colours.}%
+  \end{subfigure}%
   \caption{Local extraction of each subarray $P^{(s)}$.
   The set $S_1$ is represented by horizontal lines, and $S_2$ by vertical lines.
   The cleanup step will need to move all local $S_1$s to the left of $w_l$ and all local $S_2$s to the right of $w_r$.}%
-  \label{fig:block}
+  \label{fig:block}%
 \end{figure}
 
 Figure~\ref{fig:blockcyclic} illustrates a block\-/cyclic distribution, which distributes blocks of $b$ elements in round\-/robin fashion over the threads.
@@ -322,49 +319,44 @@ We cannot take $b = 1$ because vector instructions and cache lines make it prohi
 But we can choose $b \in O(1)$ quite small without suffering hardware penalties.
 
 \begin{figure}[ht]
-  \begin{subfigure}{\columnwidth}
-    \resizebox{\columnwidth}{!}{%
+  \begin{subfigure}[b]{\linewidth}
+    \resizebox{\linewidth}{!}{%
       \begin{tikzpicture}
         \draw (0, 0) rectangle (16, 0.5);
-
         \foreach \i in {0, ..., 3} {
           \draw[fill=lightgray] (\i * 4 + 1, 0) rectangle (\i * 4 + 1 + 1, 0.5);
         }
-
-        \draw[pattern=horizontal lines, pattern color=black] (0 * 4 + 1, 0) rectangle (0 * 4 + 1 + 1, 0.5);
-        \draw[pattern=horizontal lines, pattern color=black] (1 * 4 + 1, 0) rectangle (1 * 4 + 1 + 0.3, 0.5);
-        \draw[pattern=vertical lines, pattern color=black] (2 * 4 + 1 + 0.7, 0) rectangle (2 * 4 + 1 + 1, 0.5);
-        \draw[pattern=vertical lines, pattern color=black] (3 * 4 + 1, 0) rectangle (3 * 4 + 1 + 1, 0.5);
-      \end{tikzpicture}
-    }
-    \subcaption{Local extraction of $P^{(s)}$, SPMD view from thread $s$.}
+        \draw[pattern=horizontal lines,pattern color=black] (0 * 4 + 1, 0) rectangle (0 * 4 + 1 + 1, 0.5);
+        \draw[pattern=horizontal lines,pattern color=black] (1 * 4 + 1, 0) rectangle (1 * 4 + 1 + 0.3, 0.5);
+        \draw[pattern=vertical lines,pattern color=black] (2 * 4 + 1 + 0.7, 0) rectangle (2 * 4 + 1 + 1, 0.5);
+        \draw[pattern=vertical lines,pattern color=black] (3 * 4 + 1, 0) rectangle (3 * 4 + 1 + 1, 0.5);
+      \end{tikzpicture}%
+    }%
+    \caption{Local extraction of $P^{(s)}$, SPMD view from thread $s$.}%
   \end{subfigure}
-  \begin{subfigure}{\columnwidth}
-    \resizebox{\columnwidth}{!}{%
+  \begin{subfigure}[b]{\linewidth}
+    \resizebox{\linewidth}{!}{%
       \begin{tikzpicture}
         \draw (0, 0) rectangle (16, 0.5);
-
         \foreach \s/\col in {0/colorblind0, 1/colorblind1, 2/colorblind2, 3/colorblind3} {
           \foreach \i in {0, ..., 3} {
             \draw[fill=white!60!\col] (\i * 4 + \s, 0) rectangle (\i * 4 + \s + 1, 0.5);
           }
-
-          \draw[pattern=horizontal lines, pattern color=\col] (0 * 4 + \s, 0) rectangle (0 * 4 + \s + 1, 0.5);
-          \draw[pattern=horizontal lines, pattern color=\col] (1 * 4 + \s, 0) rectangle (1 * 4 + \s + 0.3, 0.5);
-          \draw[pattern=vertical lines, pattern color=\col] (2 * 4 + \s + 0.7, 0) rectangle (2 * 4 + \s + 1, 0.5);
-          \draw[pattern=vertical lines, pattern color=\col] (3 * 4 + \s, 0) rectangle (3 * 4 + \s + 1, 0.5);
+          \draw[pattern=horizontal lines,pattern color=\col] (0 * 4 + \s, 0) rectangle (0 * 4 + \s + 1, 0.5);
+          \draw[pattern=horizontal lines,pattern color=\col] (1 * 4 + \s, 0) rectangle (1 * 4 + \s + 0.3, 0.5);
+          \draw[pattern=vertical lines,pattern color=\col] (2 * 4 + \s + 0.7, 0) rectangle (2 * 4 + \s + 1, 0.5);
+          \draw[pattern=vertical lines,pattern color=\col] (3 * 4 + \s, 0) rectangle (3 * 4 + \s + 1, 0.5);
         }
-
-        \draw[->, thick] (5.2 , 1.5) node[above] {$w_l$} -- (5.2 , 1.1);
-        \draw[->, thick] (10.8, 1.5) node[above] {$w_r$} -- (10.8, 1.1);
-      \end{tikzpicture}
-    }
-    \subcaption{Local partition for four processors, in different colours.}
-  \end{subfigure}
+        \draw[->,thick] ( 5.2, 1.5) node[above] {$w_l$} -- ( 5.2, 1.1);
+        \draw[->,thick] (10.8, 1.5) node[above] {$w_r$} -- (10.8, 1.1);
+      \end{tikzpicture}%
+    }%
+    \caption{Local partition for four processors, in different colours.}
+  \end{subfigure}%
   \caption{Local extraction of each subarray $P^{(s)}$, block\-/cyclic distribution.
   The set $S_1$ is represented by horizontal lines, and $S_2$ by vertical lines.
   The cleanup step will need to move all local $S_1$s to the left of $w_l$ and all local $S_2$s to the right of $w_r$.}%
-  \label{fig:blockcyclic}
+  \label{fig:blockcyclic}%
 \end{figure}
 
 \paragraph{Cleanup and final algorithm}
@@ -398,18 +390,18 @@ Putting this together yields Algorithm~\ref{alg:par_subset}.
     \If{t = 0}
       \State Do the Dutch National Flag algorithm on $P[w_l^{\min}, w_l^{\max}) \cup P[w_r^{\min}, w_r^{\max})$;
     \EndIf
-  \end{algorithmic}
+  \end{algorithmic}%
   \captionof{algorithm}{Subset extraction, SPMD view from thread $s$.}%
-  \label{alg:par_subset}
+  \label{alg:par_subset}%
 \end{algorithm}
 
 \section{Implementation}\label{sec:impl}
-We implement the algorithm using the Highway library~\cite{wassenberg2022vectorized} for vectorization, and OpenMP for multithreading.
+We implement the algorithm using the Highway library~\cite{wassenberg2022vectorized} for vectorisation, and OpenMP for multithreading.
 Our library is available with Fortran and C interfaces under a GPLv3 licence~\cite{vqhull2025repository}.
 The basic idea is faithful to Algorithm~\ref{alg:quickhull} and the subset extraction, but several small changes are necessary to obtain good performance, which we document here.
 
-\paragraph{Parallelization}
-We parallelize both the recursion and the subset extraction.
+\paragraph{Parallelisation}
+We parallelise both the recursion and the subset extraction.
 We divide the available threads over the recursive calls in the same ratio as $|S_1| : |S_2|$.
 When we have only one thread left, we switch to the sequential implementation.
 
@@ -427,7 +419,7 @@ We also align $P$ to cacheline boundaries by processing a few elements at the st
 
 CPUs try to mitigate partial transactions to main memory by accumulating writes to the same cacheline in a limited number of buffers.
 Writes to main memory are delayed as long as possible, so more data can be sent to main memory in a single transaction over the bus.
-On some of our test systems, these buffers are overwhelmed because we write in an irregular pattern to four different memory regions ($x$- and $y$-coordinates from both the left and right side), and because we do many writes of irregular length that may cross cacheline boundaries.
+On some of our test systems, these buffers are overwhelmed because we write in an irregular pattern to four different memory regions (x- and y-coordinates from both the left and right side), and because we do many writes of irregular length that may cross cacheline boundaries.
 To give the CPU a better chance of combining bus traffic, we first write to small circular buffers that fit in the first\-/level data cache.
 These writes do not cause traffic to main memory.
 Once full, we can efficiently empty the buffers to main memory by using vectorized stores to aligned addresses.
@@ -445,29 +437,29 @@ Preliminary measurements on a laptop (Table~\ref{tab:reference}) show that PBBS 
   \centering
   \begin{tabular}{cc}
     \toprule
-    Implementation       & Runtime (\si{\second}) \\
+    Implementation & Runtime (\si{\second}) \\
     \midrule
-    PBBS                 & 0.31 \\
-    CGAL Akl\-/Toussaint & 0.60 \\
-    CGAL Quickhull       & 0.61 \\
-    CGAL Bykat           & 0.73 \\
-    CGAL Eddy            & 0.98 \\
-    Qhull                & 1.1 \\
-    CGAL Graham          & 1.3 \\
-    CGAL Jarvis          & 208 \\
+    PBBS               & 0.31 \\
+    CGAL Akl-Toussaint & 0.60 \\
+    CGAL Quickhull     & 0.61 \\
+    CGAL Bykat         & 0.73 \\
+    CGAL Eddy          & 0.98 \\
+    Qhull              & 1.1 \\
+    CGAL Graham        & 1.3 \\
+    CGAL Jarvis        & 208 \\
     \bottomrule
-  \end{tabular}
+  \end{tabular}%
   \caption{Runtime for a disk of $10^7$ points, sequential implementation.}%
-  \label{tab:reference}
+  \label{tab:reference}%
 \end{table}
 
 PBBS and VQhull differ in several design choices that are relevant when interpreting results.
 PBBS partitions an array of indices instead of the points themselves.
-Their parallelization strategy is to spawn threads on the recursive calls until a base case of \qty{400} points is reached.
+Their parallelisation strategy is to spawn threads on the recursive calls until a base case of \qty{400} points is reached.
 The points $r_1$, $r_2$ are found in a separate pass.
 
 PBBS applies Hoare's algorithm~\cite{hoare1962quick} for partitioning sequentially, and is scan\-/based~\cite{blelloch1989scans} in parallel.
-Because of this, bandwidth utilization and energy efficiency improvements of PBBS are much greater when comparing the parallel case against the sequential case than for VQhull, which applies the same approach in both the sequential and parallel case.
+Because of this, bandwidth utilisation and energy efficiency improvements of PBBS are much greater when comparing the parallel case against the sequential case than for VQhull, which applies the same approach in both the sequential and parallel case.
 
 Finally, VQhull stores coordinates in structure\-/of\-/arrays format, whereas PBBS uses a single array of element type:
 \begin{verbatim}
@@ -509,9 +501,9 @@ To most accurately mirror the access pattern of VQhull, we report the \emph{Scal
     Theoretic bandwidth (\si{\giga\byte\per\second}) & 51.2 & 204.8 & 76.8 \\
     STREAM (\si{\giga\byte\per\second}) & 41 & 140 & 52 \\
     \bottomrule
-  \end{tabular}
+  \end{tabular}%
   \caption{Theoretical and practical capabilities of test systems.}%
-  \label{tab:system}
+  \label{tab:system}%
 \end{table}
 
 \subsection{Datasets}\label{sec:datasets}
@@ -557,11 +549,11 @@ We only have one recursive call, and the recursion is very unbalanced.
       3.5/2.0,
       4.9/2.7
     } {\fill (\x,\y) circle (2pt);}
-  \end{tikzpicture}
+  \end{tikzpicture}%
   \caption{The Kuzmin dataset.
   The first partition only moves $r_1$.
   The second partition eliminates all remaining points.}%
-  \label{fig:kuzmin}
+  \label{fig:kuzmin}%
 \end{figure}
 
 The second dataset consists of points sampled uniformly from a circle, so points of the form $(\cos(\theta), \sin(\theta))$.
@@ -591,7 +583,7 @@ First\---to evaluate how close the wallclock time gets to the hardware's peak\--
 We split the $x$- and $y$-coordinates into two separate arrays.
 Assuming 64-bit floating\-/point numbers are used, this is $8|P|$ bytes for finding the left\-/most and right\-/most points.
 At each recursive call, we have $8(|P| + |S_1| + |S_2|)$ bytes for the partition, and $8|CH(S_2)|$ bytes to place $CH(S_1)$ and $CH(S_2)$ next to each other in memory.
-We then scale this by the maximum practical bandwidth of the machine, as measured by the STREAM benchmark (Table~\ref{tab:system}), to get the effective bandwidth utilization.
+We then scale this by the maximum practical bandwidth of the machine, as measured by the STREAM benchmark (Table~\ref{tab:system}), to get the effective bandwidth utilisation.
 Second, we measure the energy consumption in Joules, and use the same approach to compute the energy efficiency in terms of data movement, in \si{\giga\byte\per\joule}.
 
 \subsection{Experimental protocol}
@@ -624,8 +616,8 @@ The difference in power draw between these two nominally identical CPUs is expec
 Laptop has an idle power draw of \qty{6.26}{\watt}.
 
 \section{Performance evaluation}\label{sec:evaluation}
-In this section, we focus on trends in hardware\-/normalized metrics rather than raw throughput and energy consumption.
-Specifically, we report bandwidth utilization and energy efficiency as defined in Section~\ref{sec:metrics}.
+In this section, we focus on trends in hardware\-/normalised metrics rather than raw throughput and energy consumption.
+Specifically, we report bandwidth utilisation and energy efficiency as defined in Section~\ref{sec:metrics}.
 These metrics enable meaningful comparisons across systems with different performance characteristics.
 Absolute runtime, bandwidth, and energy measurements are provided in the artefact~\cite{vqhull2025artefact}.
 
@@ -637,7 +629,7 @@ On Kuzmin, almost all points belong to either $S_1$ or $S_2$, making Hoare's bra
 VQhull replaces branches with masked SIMD classification, encountering difficult a branch only every \qtyrange{4}{8} elements.
 Consequently, PBBS performance varies more with dataset properties, while VQhull tends to be more stable across inputs.
 
-\paragraph{Vectorization}
+\paragraph{Vectorisation}
 SIMD enables VQhull to classify multiple points per operation, achieving more work per instruction than PBBS, even when branch prediction is favourable.
 However, speedup does not scale linearly with vector width: the compression instruction itself is not perfectly efficient per element, and other SIMD operations can occur within a single test as well.
 
@@ -652,36 +644,36 @@ Disk has balanced recursion but less predictable access patterns, reducing cache
 
 \begin{figure}[t]
   \scriptsize
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:bw-cn125}%
     \input{fig_cn125_threads_bandwidth.tex}%
+    \phantomcaption\label{fig:bw-cn125}%
   \end{subfigure}%
   \hfill
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:bw-cn132}%
     \input{fig_cn132_threads_bandwidth.tex}%
+    \phantomcaption\label{fig:bw-cn132}%
   \end{subfigure}%
   \hfill
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:bw-laptop}%
     \input{fig_laptop_threads_bandwidth.tex}%
+    \phantomcaption\label{fig:bw-laptop}%
   \end{subfigure}%
-  \caption{Bandwidth utilization for $10^8$ points, as a percentage of STREAM's bandwidth.
+  \caption{Bandwidth utilisation for $10^8$ points, as a percentage of STREAM's bandwidth.
   The solid lines represent the VQhull implementation, the dashed lines represent the PBBS implementation.
   Each dataset is shown with a unique colour and marker.}%
-  \label{fig:bw}
+  \label{fig:bw}%
 \end{figure}
 
 \subsection{Throughput scaling with thread count}
-Figure~\ref{fig:bw} shows bandwidth utilization for $10^8$ points as a function of thread count, normalized to STREAM bandwidth.
-Utilization above \qty{100}{\percent} can occur when deeper recursion levels operate on subsets that fit in cache, reducing the need to access main memory.
+Figure~\ref{fig:bw} shows bandwidth utilisation for $10^8$ points as a function of thread count, normalised to STREAM bandwidth.
+Utilisation above \qty{100}{\percent} can occur when deeper recursion levels operate on subsets that fit in cache, reducing the need to access main memory.
 
 For VQhull, Circle scales best on cn125 and cn132.
 Circle's deep and balanced recursion enables more parallel work at deeper levels.
-On cn125, bandwidth utilization peaks around \qty{125}{\percent} at eight threads and then drops slightly with hyper\-/threading.
+On cn125, bandwidth utilisation peaks around \qty{125}{\percent} at eight threads and then drops slightly with multithreading.
 On cn132, performance continues to improve up to 32 threads.
 Disk consistently underperforms Circle and Kuzmin.
 This can be attributed to less predictable access patterns, which reduce the effectiveness of hardware prefetching and lower cache efficiency.
@@ -700,62 +692,62 @@ Consequently, PBBS performs relatively better on Kuzmin, where memory access pat
 
 \begin{figure}[t]
   \scriptsize
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:points-cn125}%
     \input{fig_cn125_points_bandwidth.tex}%
+    \phantomcaption\label{fig:points-cn125}%
   \end{subfigure}%
   \hfill
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:points-cn132}%
     \input{fig_cn132_points_bandwidth.tex}%
+    \phantomcaption\label{fig:points-cn132}%
   \end{subfigure}%
   \hfill
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:points-laptop}%
     \input{fig_laptop_points_bandwidth.tex}%
+    \phantomcaption\label{fig:points-laptop}%
   \end{subfigure}%
-  \caption{Bandwidth utilization over input sweep as a percentage of STREAM's bandwidth, fixed at the maximum number of available threads.
+  \caption{Bandwidth utilisation over input sweep as a percentage of STREAM's bandwidth, fixed at the maximum number of available threads.
   The solid lines represent the VQhull implementation, the dashed lines represent the PBBS implementation.
   Each dataset is shown with a unique colour and marker.}%
-  \label{fig:points}
+  \label{fig:points}%
 \end{figure}
 
 \subsection{Throughput scaling with input size}
-Figure~\ref{fig:points} shows bandwidth utilization as a function of input size from $10^5$ to $10^9$ points (\qty{1.6}{\mega\byte}--\qty{16}{\giga\byte}), using the maximum number of threads on each system.
+Figure~\ref{fig:points} shows bandwidth utilisation as a function of input size from $10^5$ to $10^9$ points (\qty{1.6}{\mega\byte}--\qty{16}{\giga\byte}), using the maximum number of threads on each system.
 For the largest input size, PBBS results are missing on cn125 and laptop.
 PBBS partitions an array of indices instead of the points themselves, resulting in a higher memory footprint that exceeds the hardware capabilities on those systems.
 
-For small inputs, PBBS achieves higher bandwidth utilization than VQhull because VQhull's overhead from alignment, block\-/cyclic distribution, and thread balancing has not yet amortized.
+For small inputs, PBBS achieves higher bandwidth utilisation than VQhull because VQhull's overhead from alignment, block\-/cyclic distribution, and thread balancing has not yet amortized.
 As input size increases, VQhull performance improves rapidly until saturation occurs at memory bandwidth.
 The saturation point depends on both the dataset and system.
 On cn132, NUMA effects dominate at larger sizes, causing Disk and Kuzmin to exhibit similar scaling despite their structural differences.
 
 \begin{figure}[t]
   \scriptsize
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:energy-cn125}%
     \input{fig_cn125_threads_energy.tex}%
+    \phantomcaption\label{fig:energy-cn125}%
   \end{subfigure}%
   \hfill
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:energy-cn132}%
     \input{fig_cn132_threads_energy.tex}%
+    \phantomcaption\label{fig:energy-cn132}%
   \end{subfigure}%
   \hfill
-  \begin{subfigure}{.33\linewidth}
+  \begin{subfigure}[b]{0.33\linewidth}
     \centering
-    \phantomcaption\label{fig:energy-laptop}%
     \input{fig_laptop_threads_energy.tex}%
+    \phantomcaption\label{fig:energy-laptop}%
   \end{subfigure}%
   \caption{Energy efficiency for $10^8$ points.
   The solid lines represent the VQhull implementation, the dashed lines represent the PBBS implementation.
   Each dataset is shown with a unique colour and marker.}%
-  \label{fig:energy}
+  \label{fig:energy}%
 \end{figure}
 
 \subsection{Energy efficiency scaling with thread count}
@@ -765,19 +757,19 @@ Energy efficiency is shown as data moved per Joule, enabling comparisons across 
 Across all systems and datasets, VQhull is consistently more energy efficient than PBBS.
 On cn125 and laptop, VQhull's efficiency initially improves with increasing thread counts, then plateaus or declines as bandwidth saturation is approached.
 This trend reflects frequency scaling: more active cores trigger per\-/core frequency reduction.
-Since power draw scales roughly as frequency cubed~\cite{kim2015stabilizing}, parallelization can reduce total energy consumption even when runtime improvements are modest.
+Since power draw scales roughly as frequency cubed~\cite{kim2015stabilizing}, parallelisation can reduce total energy consumption even when runtime improvements are modest.
 
 On cn132, behaviour differs markedly: activating the second CPU (at two threads) increases power draw significantly before frequency reduction takes effect.
 Energy efficiency then improves again as more cores become active.
 
-Comparing energy efficiency (Figure~\ref{fig:energy}) with bandwidth utilization (Figure~\ref{fig:bw}) reveals that the energy\-/optimal thread count typically occurs at or before the throughput\-/optimal point.
+Comparing energy efficiency (Figure~\ref{fig:energy}) with bandwidth utilisation (Figure~\ref{fig:bw}) reveals that the energy\-/optimal thread count typically occurs at or before the throughput\-/optimal point.
 This effect is most pronounced on cn125, likely due to its AVX-512 instructions set: wide SIMD instructions increase power demand, which forces frequency reduction to meet power limits.
 This yields diminishing performance gains while power draw remains elevated.
 As a result, additional threads provide only small performance improvements while requiring disproportionally more energy~\cite{gottschlag2021fair}.
 
 \subsection{Runtime and energy trade-offs}
 A central insight emerges: optimizing for runtime does not necessarily optimize for energy.
-Sequential VQhull can consume less energy than parallel PBBS despite longer runtime, demonstrating that algorithmic improvements\---reducing branch mispredictions, decreasing work, improving hardware utilization\---can deliver energy savings independent of runtime gains.
+Sequential VQhull can consume less energy than parallel PBBS despite longer runtime, demonstrating that algorithmic improvements\---reducing branch mispredictions, decreasing work, improving hardware utilisation\---can deliver energy savings independent of runtime gains.
 
 VQhull consistently improves both throughput and energy efficiency over PBBS across platforms and datasets.
 However, the optimal thread count depends on hardware characteristics and dataset distribution, and can differ between runtime and energy objectives.
@@ -801,10 +793,10 @@ In contrast to the SIMD instructions we have available now, this work from 1981 
 
 Our analysis shows that VQhull is bandwidth\-/limited and already close to the theoretical maximum that any implementation of Quickhull can obtain.
 For this reason, significant further speedup can only be obtained by a preprocessing step that attempts to remove as many points as possible.
-This is called convex hull point filtering, and an early example of this is the Akl\-/Toussaint heuristic~\cite{akl1978fast}.
+This is called convex hull point filtering, and an early example of this is the Akl-Toussaint heuristic~\cite{akl1978fast}.
 In the case of Disk, this heuristic lets us identify $p_1, \cdots, p_8$ of Figure~\ref{fig:akl} in one pass.
 This octagon has area $2\sqrt{2}$, which is approximately \qty{90}{\percent} of the disk, and these points can be eliminated.
-Points $u$ satisfy $\orient(p_i, u, p_{i + 1\,\text{mod}\, 8}) > 0$ for precisely one $i$ if they are between the circle and line segment $\overrightarrow{p_i p_{i + 1 \,\text{mod}\, 8}}$, or none if $u$ is inside the octagon.
+Points $u$ satisfy $\orient(p_i, u, p_{i + 1 \bmod 8}) > 0$ for precisely one $i$ if they are between the circle and line segment $\overrightarrow{p_i p_{i + 1 \bmod 8}}$, or none if $u$ is inside the octagon.
 If we can partition the input into these eight areas in one pass as well, we need only $1.6 + 1.6 + 0.16 = \qty{3.36}{\giga\byte}$ to eliminate \qty{90}{\percent} of points.
 VQhull gets to the same points in 3 levels of recursion, which takes \qty{6.5}{\giga\byte}.
 So this heuristic cuts the required bandwidth almost in half.
@@ -822,10 +814,10 @@ So this heuristic cuts the required bandwidth almost in half.
           (0, -2) node[below] {$p_7$} --
           (-1.414, -1.414) node[below left] {$p_8$} --
           (-2, 0);
-  \end{tikzpicture}
-  \caption{Points $p_1, \cdots, p_8$ can be found by minimum / maximum $x$-coordinates, $y$-coordinates, differences / sums of $x$ and $y$ coordinates.
+  \end{tikzpicture}%
+  \caption{Points $p_1, \cdots, p_8$ can be found by minimum / maximum x-coordinates, y-coordinates, differences / sums of x and y coordinates.
   Points within this octagon are not in the convex hull.}%
-  \label{fig:akl}
+  \label{fig:akl}%
 \end{figure}
 
 A more recent example of point filtering can be found in ConcurrentHull~\cite{masnadi2020concurrent}, which effectively parallelizes a combination of Chan's algorithm~\cite{chan1996optimal} with convex hull point filtering.
