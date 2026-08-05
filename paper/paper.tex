@@ -455,7 +455,7 @@ Preliminary measurements on a laptop (Table~\ref{tab:reference}) show that PBBS 
 
 PBBS and VQhull differ in several design choices that are relevant when interpreting results.
 PBBS partitions an array of indices instead of the points themselves.
-Their parallelisation strategy is to spawn threads on the recursive calls until a base case of \qty{400} points is reached.
+Their parallelisation strategy is to spawn threads on the recursive calls until a base case of \num{400} points is reached.
 The points $r_1$, $r_2$ are found in a separate pass.
 
 PBBS applies Hoare's algorithm~\cite{hoare1962quick} for partitioning sequentially, and is scan\-/based~\cite{blelloch1989scans} in parallel.
@@ -558,7 +558,7 @@ We only have one recursive call, and the recursion is very unbalanced.
 
 The second dataset consists of points sampled uniformly from a circle, so points of the form $(\cos(\theta), \sin(\theta))$.
 A true circle is convex, so all of its points lie on the convex hull.
-However, the algorithm finds only \qty{10985400} of the $10^8$ points (\qty{\sim11}{\percent}).
+However, the algorithm finds only \num{10985400} of the $10^8$ points (\qty{\sim11}{\percent}).
 This is not a mistake or a problem, because a sampled circle locally resembles a line, up to the square root of the unit round-off, and points on a line can be rejected from the convex hull.
 To be more precise, at $(\cos(\theta), \sin(\theta))$, the tangent line has equation
 \[
@@ -588,7 +588,7 @@ Second, we measure the energy consumption in Joules, and use the same approach t
 
 \subsection{Experimental protocol}
 We use GCC 14.1.1.
-All experiments are run \qty{20} times.
+All experiments are run \num{20} times.
 We sweep over the number of threads and over the input size.
 For the thread sweep, we fix the input size to $10^8$ points, and vary the number of threads from the sequential case to the number of available threads.
 We pick this input size, because the $10^9$ input does not fit in memory on cn125 and laptop for the PBBS implementation.
