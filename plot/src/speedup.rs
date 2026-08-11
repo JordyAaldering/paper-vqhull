@@ -40,18 +40,18 @@ fn threads(device: Device) {
     let pbbs_disk = baseline(&pbbs, Dataset::Disk);
     let pbbs_kuzmin = baseline(&pbbs, Dataset::Kuzmin);
 
-    let mut ax = LinePlot::new(
-            |r: &Record| r.threads as f64,
+    let mut ax = LinePlot::<Record, Dataset>::new(
+            |r| r.threads as f64,
             "Threads",
             "Speedup vs sequential PBBS",
         )
         .grouped_series(&vqhull,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             move |r| r.speedup(vqhull_circle, vqhull_disk, vqhull_kuzmin),
             AggregationMode::meanstd(),
         )
         .grouped_series(&pbbs,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             move |r| r.speedup(pbbs_circle, pbbs_disk, pbbs_kuzmin),
             AggregationMode::meanstd(),
         )

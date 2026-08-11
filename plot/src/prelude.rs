@@ -17,20 +17,20 @@ pub struct Record {
     uncore: f64,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
+#[derive(Clone, Copy, Hash, PartialOrd, PartialEq, Eq)]
 pub enum Device {
     CN125,
     CN132,
     Laptop,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq, Deserialize)]
+#[derive(Clone, Copy, Hash, PartialOrd, PartialEq, Eq, Deserialize)]
 pub enum Bench {
     PBBS,
     VQhull,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq, Deserialize)]
+#[derive(Clone, Copy, Hash, PartialOrd, PartialEq, Eq, Deserialize)]
 pub enum Dataset {
     #[serde(rename = "circle")]
     Circle,
@@ -107,49 +107,54 @@ impl Record {
 
 impl Device {
     pub fn physical_cores(&self) -> usize {
-        use Device::*;
         match self {
-            CN125 => 8,
-            CN132 => 32,
-            Laptop => 6,
+            Self::CN125 => 8,
+            Self::CN132 => 32,
+            Self::Laptop => 6,
         }
     }
 
     pub fn logical_cores(&self) -> usize {
-        use Device::*;
         self.physical_cores() * match self {
-            CN125 => 2,
-            CN132 => 1,
-            Laptop => 2,
+            Self::CN125 => 2,
+            Self::CN132 => 1,
+            Self::Laptop => 2,
         }
     }
 
     pub fn theoretical_bandwidth(&self) -> f64 {
-        use Device::*;
         match self {
-            CN125 => 51.2,
-            CN132 => 204.8,
-            Laptop => 76.8,
+            Self::CN125 => 51.2,
+            Self::CN132 => 204.8,
+            Self::Laptop => 76.8,
         }
     }
 
     pub fn stream_bandwidth(&self) -> f64 {
-        use Device::*;
         match self {
-            CN125 => 41.0,
-            CN132 => 140.0,
-            Laptop => 52.0,
+            Self::CN125 => 41.0,
+            Self::CN132 => 140.0,
+            Self::Laptop => 52.0,
         }
     }
 }
 
 impl fmt::Display for Device {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        use Device::*;
         match self {
-            CN125 => write!(f, "cn125"),
-            CN132 => write!(f, "cn132"),
-            Laptop => write!(f, "laptop"),
+            Self::CN125 => write!(f, "cn125"),
+            Self::CN132 => write!(f, "cn132"),
+            Self::Laptop => write!(f, "laptop"),
+        }
+    }
+}
+
+impl fmt::Display for Dataset {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Circle => write!(f, "Circle"),
+            Self::Disk => write!(f, "Disk"),
+            Self::Kuzmin => write!(f, "Kuzmin"),
         }
     }
 }

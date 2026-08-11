@@ -10,18 +10,18 @@ fn threads(device: Device) {
     let vqhull = df.clone().filter(|_, r| r.bench == Bench::VQhull);
     let pbbs = df.filter(|_, r| r.bench == Bench::PBBS);
 
-    let mut ax = LinePlot::new(
-            |r: &Record| r.threads as f64,
+    let mut ax = LinePlot::<Record, Dataset>::new(
+            |r| r.threads as f64,
             "Threads",
             "Energy efficiency (\\si{\\giga\\byte\\per\\joule})",
         )
         .grouped_series(&vqhull,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             |r| r.energy_efficiency(),
             AggregationMode::Quartiles,
         )
         .grouped_series(&pbbs,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             |r| r.energy_efficiency(),
             AggregationMode::Quartiles,
         )
@@ -57,18 +57,18 @@ fn points(device: Device) {
     let vqhull = df.clone().filter(|_, r| r.bench == Bench::VQhull);
     let pbbs = df.filter(|_, r| r.bench == Bench::PBBS);
 
-    let mut ax = LinePlot::new(
-            |r: &Record| r.size as f64,
+    let mut ax = LinePlot::<Record, Dataset>::new(
+            |r| r.size as f64,
             "Input size (points)",
             "Energy efficiency (\\si{\\giga\\byte\\per\\joule})",
         )
         .grouped_series(&vqhull,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             |r| r.energy_efficiency(),
             AggregationMode::Quartiles,
         )
         .grouped_series(&pbbs,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             |r| r.energy_efficiency(),
             AggregationMode::Quartiles,
         )

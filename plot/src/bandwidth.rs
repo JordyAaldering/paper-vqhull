@@ -10,18 +10,18 @@ fn threads(device: Device) {
     let vqhull = df.clone().filter(|_, r| r.bench == Bench::VQhull);
     let pbbs = df.filter(|_, r| r.bench == Bench::PBBS);
 
-    let mut ax = LinePlot::new(
-            |r: &Record| r.threads as f64,
+    let mut ax = LinePlot::<Record, Dataset>::new(
+            |r| r.threads as f64,
             "Threads",
             "Bandwidth utilization (\\si{{\\percent}})",
         )
         .grouped_series(&vqhull,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             move |r| r.bandwidth_utilization(device),
             AggregationMode::meanstd(),
         )
         .grouped_series(&pbbs,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             move |r| r.bandwidth_utilization(device),
             AggregationMode::meanstd(),
         )
@@ -57,18 +57,18 @@ fn points(device: Device) {
     let vqhull = df.clone().filter(|_, r| r.bench == Bench::VQhull);
     let pbbs = df.filter(|_, r| r.bench == Bench::PBBS);
 
-    let mut ax = LinePlot::new(
-            |r: &Record| r.size as f64,
+    let mut ax = LinePlot::<Record, Dataset>::new(
+            |r| r.size as f64,
             "Input size (points)",
             "Bandwidth utilization (\\si{{\\percent}})",
         )
         .grouped_series(&vqhull,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             move |r| r.bandwidth_utilization(device),
             AggregationMode::meanstd(),
         )
         .grouped_series(&pbbs,
-            |r| r.dataset as usize as f64,
+            |r| r.dataset,
             move |r| r.bandwidth_utilization(device),
             AggregationMode::meanstd(),
         )

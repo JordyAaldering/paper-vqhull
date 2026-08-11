@@ -6,7 +6,7 @@ fn runtime(df: &DataFrame<Record>, bench: Bench, threads: usize) -> String {
     df.clone()
         .filter(|_, r| r.bench == bench)
         .filter(|_, r| r.threads == threads)
-        .group_by(|r| r.dataset as usize as f64)
+        .group_by(|r| r.dataset)
         .summarize_by_group(&|r| r.runtime(), AggregationMode::meanstd())
         .centers
         .into_iter()
@@ -46,7 +46,7 @@ fn bandwidth(df: &DataFrame<Record>, bench: Bench, threads: usize) -> String {
     df.clone()
         .filter(|_, r| r.bench == bench)
         .filter(|_, r| r.threads == threads)
-        .group_by(|r| r.dataset as usize as f64)
+        .group_by(|r| r.dataset)
         .summarize_by_group(&|r| r.bandwidth(), AggregationMode::meanstd())
         .centers
         .into_iter()
@@ -86,7 +86,7 @@ fn bandwidth_utilization(df: &DataFrame<Record>, device: Device, bench: Bench, t
     df.clone()
         .filter(|_, r| r.bench == bench)
         .filter(|_, r| r.threads == threads)
-        .group_by(|r| r.dataset as usize as f64)
+        .group_by(|r| r.dataset)
         .summarize_by_group(&|r| r.bandwidth_utilization(device), AggregationMode::meanstd())
         .centers
         .into_iter()
@@ -126,7 +126,7 @@ fn energy(df: &DataFrame<Record>, bench: Bench, threads: usize) -> String {
     df.clone()
         .filter(|_, r| r.bench == bench)
         .filter(|_, r| r.threads == threads)
-        .group_by(|r| r.dataset as usize as f64)
+        .group_by(|r| r.dataset)
         .summarize_by_group(&|r| r.rapl(), AggregationMode::Quartiles)
         .centers
         .into_iter()
@@ -166,7 +166,7 @@ fn uncore(df: &DataFrame<Record>, bench: Bench, threads: usize) -> String {
     let uncore = df.clone()
         .filter(|_, r| r.bench == bench)
         .filter(|_, r| r.threads == threads)
-        .group_by(|r| r.dataset as usize as f64)
+        .group_by(|r| r.dataset)
         .summarize_by_group(&|r| r.uncore() * 1000.0, AggregationMode::Quartiles);
     uncore.lowers.iter()
         .zip(uncore.uppers.iter())
