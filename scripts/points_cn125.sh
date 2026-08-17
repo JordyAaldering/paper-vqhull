@@ -14,7 +14,7 @@
 iter=20
 out="points_cn125"
 
-echo "bench,dataset,threads,size,runtime,rapl" > results/"$out".csv
+echo "bench,dataset,threads,size,runtime,rapl" > res/"$out".csv
 
 # Sweep inputs 1e5--1e9 only for 16 threads
 threads=16

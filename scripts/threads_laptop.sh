@@ -6,7 +6,7 @@
 iter=20
 out="threads_laptop"
 
-echo "bench,dataset,threads,size,runtime,rapl,core,uncore,psys,gpu" > results/"$out".csv
+echo "bench,dataset,threads,size,runtime,rapl,core,uncore,psys,gpu" > res/"$out".csv
 
 # Sweep thread-count only for 1e8 points
 size=100000000

@@ -25,7 +25,7 @@ bench()
         | sed '/^$/d' \
         | awk -v name=$name -v size=$size '{
             printf "PBBS,%s,1,%d,%s\n", name, size, $0;
-        }' >> "results/"$out".csv"
+        }' >> "res/"$out".csv"
 }
 
 bench circle

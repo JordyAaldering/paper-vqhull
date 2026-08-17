@@ -6,7 +6,7 @@
 iter=20
 out="points_laptop"
 
-#echo "bench,dataset,threads,size,runtime,rapl,core,uncore,psys,gpu" > results/"$out".csv
+#echo "bench,dataset,threads,size,runtime,rapl,core,uncore,psys,gpu" > res/"$out".csv
 
 # Sweep inputs 1e5--1e8 only for 12 threads
 threads=12
@@ -30,7 +30,7 @@ make text2bin
 
 gen_input()
 {
-    name="$1"    
+    name="$1"
     option="$2"
 
     ./pbbsbench/testData/geometryData/randPoints "$option" -d 2 $size \
@@ -53,7 +53,7 @@ bench_vqhull()
         done
     } | awk -v name=$name -v threads=$threads -v size=$size '{
         printf "VQhull,%s,%d,%d,%s\n", name, threads, size, $0;
-    }' >> results/"$out".csv
+    }' >> res/"$out".csv
 }
 
 bench_pbbs()
@@ -66,7 +66,7 @@ bench_pbbs()
         | sed '/^$/d' \
         | awk -v name=$name -v threads=$threads -v size=$size '{
             printf "PBBS,%s,%d,%d,%s\n", name, threads, size, $0;
-        }' >> results/"$out".csv
+        }' >> res/"$out".csv
 }
 
 bench_all()

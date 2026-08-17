@@ -28,7 +28,7 @@ bench()
         done
     } | awk -v name="$name" -v size="$size" '{
         printf "VQhull,%s,1,%d,%s\n", name, size, $0;
-    }' >> "results/"$out".csv"
+    }' >> "res/"$out".csv"
 }
 
 bench circle

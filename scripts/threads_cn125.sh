@@ -14,7 +14,7 @@
 iter=20
 out="threads_cn125"
 
-echo "bench,dataset,threads,size,runtime,rapl" > results/"$out".csv
+echo "bench,dataset,threads,size,runtime,rapl" > res/"$out".csv
 
 # Sweep thread-count only for 1e8 points
 size=100000000

@@ -160,7 +160,7 @@ impl fmt::Display for Dataset {
 }
 
 pub fn read_csv(filename: &str) -> DataFrame<Record> {
-    let path = format!("../results/{}.csv", filename);
+    let path = format!("../res/{}.csv", filename);
     let path = Path::new(&path);
     DataFrame::from_csv(path).unwrap()
 }
