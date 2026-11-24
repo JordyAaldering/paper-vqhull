@@ -24,11 +24,6 @@
 
 \usepackage{siunitx}
 \DeclareSIUnit\flop{FLOP}
-\DeclareSIUnit\watthour{Wh}
-\DeclareSIUnit\run{run}
-\DeclareSIUnit\image{image}
-\DeclareSIUnit\mindmap{mindmap}
-\DeclareSIUnit\transfer{transfer}
 \sisetup{per-mode=symbol,range-units=single,range-phrase=--}
 
 \usepackage{algorithm}
@@ -53,12 +48,6 @@
 \definecolor{colorblind1}{RGB}{222,143,5}
 \definecolor{colorblind2}{RGB}{2,158,115}
 \definecolor{colorblind3}{RGB}{213,94,0}
-\definecolor{colorblind4}{RGB}{204,120,188}
-\definecolor{colorblind5}{RGB}{202,145,97}
-\definecolor{colorblind6}{RGB}{251,175,228}
-\definecolor{colorblind7}{RGB}{148,148,148}
-\definecolor{colorblind8}{RGB}{236,225,51}
-\definecolor{colorblind9}{RGB}{86,180,233}
 
 \newcommand{\epyfigurewidth}{\linewidth}
 \newcommand{\epyheightratio}{0.85}
@@ -676,9 +665,8 @@ Because energy consumption measurements are not normally distributed and are mor
 Tables with exact results and a collection of all figures are available in the artefact~\cite{vqhull2025artefact}.
 
 Intel and AMD both provide hardware counters that track the accumulated energy consumption of their processors.
-Although initially based on estimation models, these interfaces nowadays provide precise energy consumption statistics~\cite{khan2018rapl}.
-Intel CPUs provide these counters since their Sandy Bridge architecture (2011).
-AMD started providing them with their Zen architecture (2017).
+Intel CPUs provide these counters since their \emph{Sandy Bridge} (2011).
+AMD started providing them since \emph{Zen} (2017).
 These counters track the energy consumption of the entire CPU.
 The difference between the counter value before and after a benchmark gives the total CPU energy consumed during that benchmark.
 Feasibility of measuring system memory is limited by a lack of software interfaces and external power meters, both of which are unavailable to us.
@@ -720,23 +708,19 @@ Kuzmin's shallow, unbalanced recursion limits parallelism and amplifies thread m
 Disk has balanced recursion but less predictable access patterns, reducing cache locality and prefetch effectiveness.
 
 \begin{figure}[t]
-  \scriptsize
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_cn125_threads_bandwidth.tex}%
-    \phantomcaption\label{fig:bw-cn125}%
   \end{subfigure}%
   \hfill
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_cn132_threads_bandwidth.tex}%
-    \phantomcaption\label{fig:bw-cn132}%
   \end{subfigure}%
   \hfill
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_laptop_threads_bandwidth.tex}%
-    \phantomcaption\label{fig:bw-laptop}%
   \end{subfigure}%
   \caption{Bandwidth utilisation for $10^8$ points, as a percentage of STREAM's bandwidth.
   The solid lines represent the VQhull implementation, the dashed lines represent the PBBS implementation.
@@ -768,23 +752,19 @@ Multiple passes over the data increase memory traffic, and sparse subsets at dee
 Consequently, PBBS performs relatively better on Kuzmin, where memory access patterns are more predictable.
 
 \begin{figure}[t]
-  \scriptsize
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_cn125_points_bandwidth.tex}%
-    \phantomcaption\label{fig:points-cn125}%
   \end{subfigure}%
   \hfill
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_cn132_points_bandwidth.tex}%
-    \phantomcaption\label{fig:points-cn132}%
   \end{subfigure}%
   \hfill
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_laptop_points_bandwidth.tex}%
-    \phantomcaption\label{fig:points-laptop}%
   \end{subfigure}%
   \caption{Bandwidth utilisation over input sweep as a percentage of STREAM's bandwidth, fixed at the maximum number of available threads.
   The solid lines represent the VQhull implementation, the dashed lines represent the PBBS implementation.
@@ -803,23 +783,19 @@ The saturation point depends on both the dataset and system.
 On cn132, NUMA effects dominate at larger sizes, causing Disk and Kuzmin to exhibit similar scaling despite their structural differences.
 
 \begin{figure}[t]
-  \scriptsize
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_cn125_threads_energy.tex}%
-    \phantomcaption\label{fig:energy-cn125}%
   \end{subfigure}%
   \hfill
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_cn132_threads_energy.tex}%
-    \phantomcaption\label{fig:energy-cn132}%
   \end{subfigure}%
   \hfill
   \begin{subfigure}[b]{0.33\linewidth}
     \centering
     \input{fig_laptop_threads_energy.tex}%
-    \phantomcaption\label{fig:energy-laptop}%
   \end{subfigure}%
   \caption{Energy efficiency for $10^8$ points.
   The solid lines represent the VQhull implementation, the dashed lines represent the PBBS implementation.
